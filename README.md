@@ -1,8 +1,8 @@
 # mod-aws-alb
 
-Módulo Terraform para crear un Application Load Balancer con Target Groups y Listeners configurables vía maps (`for_each`). Sin soporte de access logs S3 (fuera de alcance para una POC simple); soporte HTTPS/ACM disponible pero opcional.
+Terraform module to create an Application Load Balancer with Target Groups and Listeners configurable via maps (`for_each`). No S3 access logs support (out of scope for a simple POC); HTTPS/ACM support is available but optional.
 
-## Uso (HTTP simple, 1 target group)
+## Usage (simple HTTP, 1 target group)
 
 ```hcl
 module "alb" {
@@ -11,7 +11,7 @@ module "alb" {
   project             = "poc"
   vpc_id              = module.vpc.vpc_id
   subnet_ids          = module.vpc.public_subnets
-  security_group_ids  = [module.sg_alb.security_group_id]
+  security_group_ids  = [module.sg_alb.this_security_group_id]
 
   target_groups = {
     web = {
@@ -35,6 +35,6 @@ module "alb" {
 }
 ```
 
-## Outputs principales
+## Main outputs
 
-`alb_dns_name` (usar con `curl`), `target_group_arns` (map, usar `module.alb.target_group_arns["web"]` para registrar instancias).
+`alb_dns_name` (use with `curl`), `target_group_arns` (map, use `module.alb.target_group_arns["web"]` to register instances).

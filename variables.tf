@@ -1,68 +1,68 @@
-### VARIABLES GLOBALES ###
+### GLOBAL VARIABLES ###
 
 variable "project" {
-  description = "Nombre del proyecto o aplicación"
+  description = "Project or application name"
   type        = string
   default     = "poc"
 }
 
 variable "environment" {
-  description = "Ambiente lógico (ej. nonproduction, production) usado para tagging"
+  description = "Logical environment (e.g. nonproduction, production) used for tagging"
   type        = string
   default     = "nonproduction"
 }
 
 variable "tags" {
-  description = "Tags adicionales que se fusionan con los tags por defecto"
+  description = "Additional tags merged with the default tags"
   type        = map(string)
   default     = {}
 }
 
-### VARIABLES ALB ###
+### ALB VARIABLES ###
 
 variable "vpc_id" {
-  description = "ID de la VPC donde se crearán los Target Groups"
+  description = "ID of the VPC where the Target Groups will be created"
   type        = string
 }
 
 variable "subnet_ids" {
-  description = "Lista de subnet IDs para el ALB (públicas para externo, privadas para interno)"
+  description = "List of subnet IDs for the ALB (public for internet-facing, private for internal)"
   type        = list(string)
 }
 
 variable "security_group_ids" {
-  description = "Lista de Security Group IDs asignados al ALB"
+  description = "List of Security Group IDs attached to the ALB"
   type        = list(string)
 }
 
 variable "internal" {
-  description = "Si true, el ALB será interno y no accesible desde internet"
+  description = "If true, the ALB will be internal and not accessible from the internet"
   type        = bool
   default     = false
 }
 
 variable "idle_timeout" {
-  description = "Tiempo en segundos que la conexión puede permanecer inactiva"
+  description = "Time in seconds a connection is allowed to remain idle"
   type        = number
   default     = 60
 }
 
 variable "enable_deletion_protection" {
-  description = "Si true, protege el ALB contra eliminación accidental vía API de AWS"
+  description = "If true, protects the ALB against accidental deletion via the AWS API"
   type        = bool
   default     = false
 }
 
 variable "enable_http2" {
-  description = "Habilita HTTP/2 en el ALB"
+  description = "Enables HTTP/2 on the ALB"
   type        = bool
   default     = true
 }
 
-### VARIABLES TARGET GROUPS ###
+### TARGET GROUP VARIABLES ###
 
 variable "target_groups" {
-  description = "Mapa de Target Groups a crear. La clave es el identificador usado en los listeners"
+  description = "Map of Target Groups to create. The key is the identifier used in listeners"
   type = map(object({
     name                 = optional(string)
     port                 = number
@@ -84,10 +84,10 @@ variable "target_groups" {
   default = {}
 }
 
-### VARIABLES LISTENERS ###
+### LISTENER VARIABLES ###
 
 variable "listeners" {
-  description = "Mapa de Listeners a crear en el ALB. La clave es el identificador del listener"
+  description = "Map of Listeners to create on the ALB. The key is the listener identifier"
   type = map(object({
     port            = number
     protocol        = string
